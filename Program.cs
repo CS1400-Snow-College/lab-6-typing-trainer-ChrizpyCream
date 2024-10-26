@@ -2,98 +2,59 @@
 using System.Diagnostics;
 Console.Clear();
 
-// Brief instructions
-Console.Write("This is a typing challenge you can not use backspace and mistakes will be shown with red.");
+// instructions for the user
+Console.Write("This is a challenge to show how proficiently you type words per minute. Errors will appear in red.");
 
-// puts a space in between the explanation and the typing phrase
-Console.WriteLine();
+string phrase1 = "Come with me and you'll see a World with pure imagination.";
+string phrase2 = "Run to eat? Or eat to run?";
+string phrase3 = "Procrastination is like a credit card: it's a lot of fun until you get the bill.";
+string phrase4 = "People can't drive you crazy if you don't give them keys.";
+string phrase5 = "When I was a kid my parents moved a lot, but I always found them.";
 
-string phrase1 = "The quick brown fox jumps over the lazy dog.";
-string phrase2 = "Bob the builder can he build it yes he can.";
-string phrase3 = "Some say the point to life is happiness what do you think the point of life is?";
-string phrase4 = "Music is a wonderful thing it can sooth the mind, hype someone up, or even tell a story!";
-string phrase5 = "Literature; you either love it or hate it, but communication is one thing that makes humans advanced.";
+// random number for the line
+Random rand2 = new Random();
+string[] copingPhrases = new string[] { phrase1, phrase2, phrase3, phrase4, phrase5 };
+string desiredPhrase = copingPhrases[rand2.Next(copingPhrases.Length)];
+string[] words = desiredPhrase.Split(' ');
 
-//random number for a random line
-Random rand = new Random();
-int randomNum = rand.Next(0,5);
+// display the chosen phrase
+Console.WriteLine($"\n{desiredPhrase}\n");
 
-//array that stores the phrases
-string[] typingPhrases = new string [5] {phrase1, phrase2, phrase3, phrase4, phrase5};
-string chosenPhrase = typingPhrases[randomNum];
-string[] words = chosenPhrase.Split(' ');
+int i = 0, correct = 0, incorrect = 0;
+Stopwatch stopwatch2 = new Stopwatch();
+stopwatch2.Start(); // Start stopwatch before loop
 
-//writes the chosen phrase
-Console.Write($"{chosenPhrase}");
-Console.WriteLine();
-
-int i = 0;
-int correct = 0;
-int incorrect = 0;
-int j = 0;
-
-Stopwatch stopwatch = new Stopwatch();
-
-//Now the user will type the chosen phrase that was chosen does not need to move the cursor
-while(i<chosenPhrase.Length)
-    {
-
-    char keyPressed = Console.ReadKey(true).KeyChar;
-    // uses background color so that spaces can be shown as mistakes as well
-    if(keyPressed == chosenPhrase[i])
-    {
-        Console.BackgroundColor = ConsoleColor.Green;
-        correct ++;
-    }else
-    {
-        Console.BackgroundColor = ConsoleColor.Red;
-        incorrect ++;
-    }
-    Console.Write(chosenPhrase[i]);
-    stopwatch.Start();
-    i ++;
-    }
-    Console.BackgroundColor = ConsoleColor.Black;
-
-    //to calculate how many words there is.
-    for(j = 0; j<words.Length; j++)
+// User types the phrase
+while (i < desiredPhrase.Length)
 {
-}
-    stopwatch.Stop();
-    double elapsedSeconds = stopwatch.ElapsedMilliseconds / 1000.0;
-    int seconds = Convert.ToInt32(elapsedSeconds);
-
-    Console.WriteLine();
-    Console.Write($"Your phrase had {j} words in it. It took you {seconds} seconds. You had {incorrect} mistakes.");
-
-    //minutes is just seconds divided by 60 because there is 60 seconds in a word.
-    double minutes = (double) elapsedSeconds/60;
-
-    // words per minute is totalWords divided by total minutes
-    double decimalWPM = (double) j/minutes;
-    // convert it to just a number for better looks
-    int WPM = Convert.ToInt32(decimalWPM);
-
-    // subtract mistakes for true WPM
-    int trueWPM = WPM - incorrect;
-    Console.WriteLine();
-    Console.Write($"Your words per minute was {trueWPM}WPM");
-
-float accuracy = (float) 0;
-
-    if (correct == 0)
-    {
-        Console.WriteLine("Wow your bad at typing");
-    }else
-    {
-        accuracy =  (float)correct/ i * 100;
-    }
-
-    //converting accuracy to a int for better looks
-    int trueAccuracy =Convert.ToInt32(accuracy);
+    char keyPressed = Console.ReadKey(true).KeyChar;
+    Console.BackgroundColor = keyPressed == desiredPhrase[i] ? ConsoleColor.Green : ConsoleColor.Red;
     
-    //for de-bugging later if needed.
-    //Console.WriteLine($"{correct} {incorrect} {i}");
+    if (keyPressed == desiredPhrase[i]) correct++;
+    else incorrect++;
 
+    Console.Write(desiredPhrase[i]);
+    Console.ResetColor();
+    i++;
+}
+
+stopwatch2.Stop();
+double elapsedSeconds = stopwatch2.ElapsedMilliseconds / 1000.0;
+int seconds = Convert.ToInt32(elapsedSeconds);
+
+// Summary of results
 Console.WriteLine();
+Console.WriteLine($"Your phrase had {words.Length} words. It took you {seconds} seconds. You made {incorrect} mistakes.");
+
+// WPM Calculation
+double minutes = elapsedSeconds / 60;
+int wpm = Convert.ToInt32(words.Length / minutes);
+int accurateWPM = Math.Max(0, wpm - incorrect); // Ensure no negative WPM
+
+// Accuracy calculation
+float accuracy = (float)correct / i * 100;
+int trueAccuracy = Convert.ToInt32(accuracy);
+Console.WriteLine($"Your words per minute was {accurateWPM} WPM.");
 Console.WriteLine($"You had {trueAccuracy}% accuracy");
+
+if (trueAccuracy < 50) Console.WriteLine("Your typing needs improvement.");

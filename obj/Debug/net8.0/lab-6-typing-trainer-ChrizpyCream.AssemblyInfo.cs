@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lab-6-typing-trainer-ChrizpyCream")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a9765bf131f5a41ccb8dcfec13d4d016bee12ff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37d321bf4d7bd5ed023865738c4750c42ec57910")]
 [assembly: System.Reflection.AssemblyProductAttribute("lab-6-typing-trainer-ChrizpyCream")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lab-6-typing-trainer-ChrizpyCream")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
